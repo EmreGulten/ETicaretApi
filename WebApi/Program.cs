@@ -1,3 +1,6 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using ETicaret.Business.DependencyResolvers.Autofac;
 using ETicaret.Data.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,10 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 IConfiguration configuration = builder.Configuration;
 
-builder.Services.AddDbContext<ContextDb>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnetion"));
-});
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBusinessModule()));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

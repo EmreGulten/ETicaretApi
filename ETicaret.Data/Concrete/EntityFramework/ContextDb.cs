@@ -5,11 +5,13 @@ namespace ETicaret.Data.Concrete.EntityFramework
 {
     public class ContextDb :DbContext
     {
-        public ContextDb(DbContextOptions options):base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=ETicaretDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
-
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<CustomerRelationship> CustomerRelationships { get; set; }
+        public DbSet<PriceListDetail> PriceListDetails { get; set; }
     }
 }

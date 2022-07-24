@@ -1,6 +1,5 @@
-﻿using ETicaret.Data.Concrete.EntityFramework;
+﻿using ETicaret.Business.Repositories.ProductRepository;
 using ETicaret.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,24 +9,78 @@ namespace WebApi.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ContextDb _contextDb;
+        private readonly IProductService _productService ;
 
-        public ProductsController(ContextDb contextDb)
+        public ProductsController(IProductService productService)
         {
-            _contextDb = contextDb;
+            _productService = productService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Add(Product product)
         {
-            var result = await _contextDb.Products.ToListAsync();
-            return result;
+            var result = await _productService.Add(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProducts(int id)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Update(Product product)
         {
-            return await _contextDb.Products.FindAsync(id);
+            var result = await _productService.Update(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
         }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Delete(Product product)
+        {
+            var result = await _productService.Delete(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetList()
+        {
+            var result = await _productService.GetList();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetProductList(int id)
+        {
+            var result = await _productService.GetProductList(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _productService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
     }
 }
