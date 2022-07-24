@@ -46,7 +46,7 @@ namespace WebApi.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result.Message); 
         }
 
         [HttpGet("[action]")]
