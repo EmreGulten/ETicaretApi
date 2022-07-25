@@ -13,5 +13,8 @@ namespace ETicaret.Data.Concrete.EntityFramework
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<CustomerRelationship> CustomerRelationships { get; set; }
         public DbSet<PriceListDetail> PriceListDetails { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+
     }
 }

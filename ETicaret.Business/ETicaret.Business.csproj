@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Authentication\Validation\FluentValidation\" />
     <Folder Include="Repositories\ProductRepository\Validation\" />
   </ItemGroup>
 
